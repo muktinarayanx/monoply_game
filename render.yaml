@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: indian-tycoon-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18.x
