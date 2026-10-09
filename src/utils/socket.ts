@@ -5,9 +5,8 @@ import { useGameStore } from '../store/gameStore';
 // ─── Configuration ───────────────────────────────────────────
 // For local testing, use your local IP. For production, use your Render URL.
 // e.g. 'https://indian-tycoon-backend.onrender.com'
-const SERVER_URL = __DEV__
-  ? 'http://192.168.1.6:3000'
-  : 'https://indian-tycoon-backend.onrender.com'; // Replace with your Render URL
+// Connect directly to the live Render backend
+const SERVER_URL = 'https://monoply-game-c0wi.onrender.com';
 
 // ─── Storage keys ────────────────────────────────────────────
 const STORAGE_KEYS = {
