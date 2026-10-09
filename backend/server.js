@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 
 const app = express();
 app.use(cors());
@@ -61,7 +61,7 @@ io.on('connection', (socket) => {
   // ── 1. CREATE GAME ─────────────────────────────────────────
   socket.on('createGame', ({ playerName, emoji }, callback) => {
     const gameId = Math.random().toString(36).substring(2, 8).toUpperCase();
-    const sessionId = uuidv4();
+    const sessionId = crypto.randomUUID();
 
     games[gameId] = {
       gameState: null,
@@ -107,7 +107,7 @@ io.on('connection', (socket) => {
       return callback({ success: false, error: 'Room is full (max 5 players).' });
     }
 
-    const sessionId = uuidv4();
+    const sessionId = crypto.randomUUID();
     game.players[sessionId] = {
       socketId: socket.id,
       name: playerName,
