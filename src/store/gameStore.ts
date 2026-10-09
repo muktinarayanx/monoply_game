@@ -31,7 +31,7 @@ const socketSync = <T extends { game: GameState | null }>(
 interface GameStore {
   game: GameState | null;
   initGame: () => void;
-  rollDice: (forcedSteps?: number) => void;
+  rollDice: () => void;
   buyProperty: (propertyId: string) => void;
   endTurn: () => void;
   startAuction: (propertyId: string) => void;
@@ -74,19 +74,12 @@ export const useGameStore = create<GameStore>()(socketSync<GameStore>((set, get)
 
   initGame: () => set({ game: getInitialState() }),
 
-  rollDice: (forcedSteps?: number) => {
+  rollDice: () => {
     const { game } = get();
     if (!game) return;
 
-    let dice1, dice2, totalSteps;
-    if (forcedSteps !== undefined) {
-      dice1 = Math.min(6, Math.max(1, Math.floor(forcedSteps / 2)));
-      dice2 = forcedSteps - dice1;
-      totalSteps = forcedSteps;
-    } else {
-      [dice1, dice2] = Engine.rollDice();
-      totalSteps = dice1 + dice2;
-    }
+    const [dice1, dice2] = Engine.rollDice();
+    const totalSteps = dice1 + dice2;
     const currentPlayer = game.players[game.currentPlayerIndex];
 
     let newState: GameState = { ...game, lastDiceRoll: [dice1, dice2] as [number, number] };

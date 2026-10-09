@@ -122,7 +122,25 @@ export const movePlayer = (state: GameState, playerId: string, steps: number): G
           const multiplier = ownedUtilities === 2 ? 10 : 4;
           rent = steps * multiplier;
         } else {
-          rent = property.baseRent * (property.level > 0 ? Math.pow(2, property.level) : 1);
+          // Proper Monopoly-style tiered rents matching the TileInfoModal rent table
+          if (property.level === 0) {
+            // Unimproved: double rent if player owns full color group
+            const ownsFullGroup = Object.values(state.properties)
+              .filter(p => p.group === property.group)
+              .every(p => p.ownerId === owner.id);
+            rent = property.baseRent * (ownsFullGroup ? 2 : 1);
+          } else if (property.level === 1) {
+            rent = property.baseRent * 5;
+          } else if (property.level === 2) {
+            rent = property.baseRent * 15;
+          } else if (property.level === 3) {
+            rent = property.baseRent * 45;
+          } else if (property.level === 4) {
+            rent = property.baseRent * 62;
+          } else if (property.level === 5) {
+            // Hotel
+            rent = property.baseRent * 75;
+          }
         }
         
         // ── Apply Discount System ──

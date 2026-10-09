@@ -70,7 +70,7 @@ export const PropertyManagerModal: React.FC<PropertyManagerModalProps> = ({
     }
     if (mode === 'REDEEM') {
       const mortgageValue = property.price / 2;
-      const redemptionCost = mortgageValue + Math.ceil(mortgageValue * 0.10);
+      const redemptionCost = mortgageValue + Math.ceil(mortgageValue * 0.20);
       return `Redeem (₹${redemptionCost})`;
     }
     return mode;

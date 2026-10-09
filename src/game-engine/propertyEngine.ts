@@ -44,7 +44,7 @@ export const redeemProperty = (state: GameState, playerId: string, propertyId: s
   const player = { ...newState.players[playerIndex] };
 
   const mortgageValue = property.price / 2;
-  const redemptionCost = mortgageValue + Math.ceil(mortgageValue * 0.10); // 10% interest
+  const redemptionCost = mortgageValue + Math.ceil(mortgageValue * 0.20); // 20% interest
 
   if (player.money >= redemptionCost) {
     player.money -= redemptionCost;
